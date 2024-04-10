@@ -83,8 +83,8 @@ tell me how to make it better >
 I rely on my team of project managers, business owners and engineers<br>
 yes... "AI Agents"
 
-When I get an idea a Project Manager meets with a Business Owner to take it in and create a comprehensive set of requirements/<br>
-then the Project Manager meets with an Engineer to build the idea based on the requirements.
+When I get an idea a Project Manager meets with a Business Owner to take it in and create a comprehensive set of requirements<br/>
+then the Project Manager meets with an Engineer to build the idea based on these new requirements.
 
 ## models
 
