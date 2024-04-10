@@ -1,0 +1,42 @@
+# Algorithmic Visualizer
+
+## Requirements:
+- User selects a common algorithm (e.g., sorting, pathfinding, graph traversal)
+- App displays a visually appealing, animated representation of the algorithm in action
+- A table below the visualization shows the algorithm's step-by-step progress
+- User can adjust parameters (e.g., array size, animation speed) via sliders or input fields
+- App highlights the relevant code snippets as the algorithm progresses
+- User can pause, step forward/backward, or restart the visualization
+
+The Algorithmic Visualizer would be an engaging and interactive way for developers to understand and teach common algorithms. The visual animations and step-by-step table would make the algorithm's inner workings clear and easy to follow.
+
+## Instructions:
+
+Here's how the AI agent could approach generating the prototype:
+
+HTML:
+- Create a container for the visualization canvas
+- Add a table to display the algorithm's progress
+- Include sliders and input fields for adjusting parameters
+- Place buttons for controlling the visualization (play, pause, step, restart)
+- Display the relevant code snippets in a syntax-highlighted code block
+
+CSS:
+- Style the visualization canvas to be visually appealing and responsive
+- Use animations and transitions to smoothly update the visualization
+- Style the table to be readable and visually consistent with the overall design
+- Ensure the sliders, input fields, and buttons have a modern, intuitive appearance
+- Apply syntax highlighting styles to the code block
+
+JavaScript:
+- Implement a few algorithms in a modular, readable way
+- Create functions to update the visualization canvas based on the algorithm's progress
+- Populate and update the table with the algorithm's step-by-step progress
+- Add event listeners to the sliders, input fields, and buttons to control the visualization
+- Highlight the relevant lines of code as the algorithm progresses
+
+The AI agent would need to intelligently generate the HTML structure, CSS styles, and JavaScript code based on the selected algorithm and user-specified parameters. The resulting prototype would be a fully functional, visually engaging app that showcases the power of AI-driven development.
+
+This Algorithmic Visualizer combines the fun of interactive visualizations, the developer-oriented focus on common algorithms, and the flashy use of tables and animations to create an appealing and educational web app.
+
+(!) make sure that when launched the first algorithm is defined, selected, visible and playable

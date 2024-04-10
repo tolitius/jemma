@@ -1,0 +1,53 @@
+Here's a detailed prompt with requirements for the "Musical Chord Progression Generator" web app:
+
+Title: Musical Chord Progression Generator
+
+Description:
+Create a web app that generates chord progressions based on user-selected musical keys and moods. The app should display the generated chords, their positions on a virtual fretboard, and allow the user to play the progression and adjust the tempo. The app should also display the chord names and their corresponding musical notation.
+
+Requirements:
+1. Key and Mood Selection:
+   - Provide a dropdown menu for the user to select a musical key (e.g., C, D, E, F, G, A, B).
+   - Include another dropdown menu for the user to choose a mood (e.g., happy, sad, mysterious, uplifting, melancholic).
+
+2. Chord Progression Generation:
+   - Upon user selection of key and mood, generate a chord progression that fits the selected criteria.
+   - Use music theory rules and algorithms to create harmonically pleasing progressions.
+   - Generate progressions with a minimum of 4 chords and a maximum of 8 chords.
+
+3. Chord Display Table:
+   - Display the generated chords in a table format.
+   - Each row should represent a chord in the progression.
+   - Columns should include the chord name, its position in the progression, and its musical notation.
+   - The chord name should be displayed in both letter notation (e.g., Cmaj7) and Roman numeral notation (e.g., I7).
+
+4. Virtual Fretboard:
+   - Display a virtual fretboard that shows the positions of the chords in the generated progression.
+   - Highlight the chords on the fretboard as the progression plays.
+   - Allow the user to interact with the fretboard by hovering over or clicking on the chords to display their names.
+
+5. Audio Playback:
+   - Include a "Play" button that allows the user to listen to the generated chord progression.
+   - Use a default tempo for playback, but allow the user to adjust the tempo using a slider or input field.
+   - Highlight the currently playing chord in the table and on the virtual fretboard.
+
+6. Musical Notation:
+   - Display the musical notation for each chord in the progression.
+   - Use standard notation symbols for chords (e.g., triads, sevenths, extensions).
+   - Optionally, include the ability to export the chord progression as a MIDI file or sheet music image.
+
+7. User Interface:
+   - Design a clean, intuitive, and visually appealing user interface.
+   - Use appropriate colors, fonts, and layout to create a professional and engaging experience.
+   - Ensure the app is responsive and works well on various screen sizes.
+
+8. Code Generation:
+   - The AI agent should generate the necessary HTML, CSS, and JavaScript code to create a functional prototype of the Musical Chord Progression Generator.
+   - The generated code should be well-structured, efficiently written, and include relevant comments.
+
+Additional Considerations:
+- Consider adding a feature to save and share generated chord progressions.
+- Provide a help section or tutorial to explain the app's features and how to use them.
+- Incorporate accessibility best practices to ensure the app is usable by a wide range of users.
+
+By following this prompt and its requirements, the AI agent should be able to create a comprehensive and engaging prototype of the Musical Chord Progression Generator web app.
