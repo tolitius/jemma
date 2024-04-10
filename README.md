@@ -21,7 +21,7 @@ and I create a web based prototype 🚀
 
 > _in fact I just created all three 👆 (so you can quickly see what I mean):_
 
-<img width="714" alt="image" src="https://github.com/tolitius/team/assets/136575/c381ac9f-1784-4f5d-a782-b681d2220bf8">
+<img width="714" alt="image" src="docs/jemma-builds.png">
 
 
 after the prototype is build, I take feedback and refactor it.
