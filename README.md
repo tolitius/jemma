@@ -9,6 +9,7 @@
 - [🛠️ how I do it](#%EF%B8%8F-how-i-do-it)
   - [models](#models)
   - [problems](#problems)
+  - [development](#development)
 - [license](#license)
 
 # 🧬 what I do
@@ -153,6 +154,22 @@ _you can check for / find errors in your browser console_
 
 >_iff you know "how to HTML", you can help fix the code as well<br/>_
 >_it is often something simple: adding a CSS class, updating the "width", etc._
+
+## development
+
+in order to run from source<br/>
+clone jemma:
+
+```bash
+$ git clone git@github.com:tolitius/jemma.git
+```
+and
+```bash
+$ cd jemma
+$ python huddle.py --prompt "Code Editor" --build-prototype --claude
+Claude 🧠 claude-3-haiku-20240307 ✅
+...
+```
 
 # license
 
