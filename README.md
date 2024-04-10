@@ -24,7 +24,7 @@ and I create a web based prototype 🚀
 <img width="714" alt="image" src="docs/jemma-builds.png">
 
 
-after the prototype is build, I take feedback and refactor it.
+after the prototype is built, I take feedback and refactor it.
 
 # 🕹️ can I play?
 
