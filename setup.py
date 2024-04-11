@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='jemma',
+    name='jemma2',
     version='0.1.4200',
     description='convert ideas into code',
     author='tolitius',
@@ -18,4 +18,7 @@ setup(
         'ollama==0.1.8',
         'replicate==0.25.1',
     ],
+    extras_require={
+    'windows': ['pyreadline3']
+    }
 )
