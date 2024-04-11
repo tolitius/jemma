@@ -33,8 +33,13 @@ of course!
 
 ## install me
 
+### mac
 ```
 $ pip install jemma
+```
+### windows
+```
+$ pip install jemma[windows]
 ```
 
 add a "`.env`" file from where I am going to be called from with API keys of your choice:
