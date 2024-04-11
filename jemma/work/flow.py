@@ -47,12 +47,14 @@ def build_prototype(brain,
                     project_manager,
                     business_owner,
                     engineer,
-                    prompt = None):
+                    prompt = None,
+                    sketch = None):
 
     if prompt:
         project_manager.meet_to_create_requirements(brain,
                                                     business_owner,
-                                                    prompt)
+                                                    prompt,
+                                                    sketch)
     prototype = project_manager.meet_to_build_prototype(brain,
                                                         engineer)
 

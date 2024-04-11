@@ -1,5 +1,5 @@
 import webbrowser
-import os, argparse, sys, re
+import os, argparse, sys, re, base64
 
 from datetime import datetime
 
@@ -65,6 +65,7 @@ def parse_cli_arguments():
 
     parser.add_argument('--requirements', metavar='path', type=str, help='path to a text file with requirements')
     parser.add_argument('--prompt', metavar='prompt', type=str, help='short idea to convert to creation')
+    parser.add_argument('--sketch', metavar='sketch', type=str, help='a mockup or a hand drawn sketch to convert to a prototype')
 
     parser.add_argument('--user-stories', action='store_true', help='create and refine user stories')
     parser.add_argument('--build-user-stories', action='store_true', help='build prototype on combined (non-refined) user stories')
@@ -83,3 +84,36 @@ def parse_cli_arguments():
 
     args = parser.parse_args()
     return args
+
+
+def file_to_utf8(path):
+
+   with open(path, "rb") as file:
+      image_data = file.read()
+      encoded = base64.b64encode(image_data)
+      return encoded.decode("utf-8")
+
+def image_path_to_type(path):
+
+    extension = path.split(".")[-1].lower()
+
+    media_types = {
+        "jpg": "image/jpeg",
+        "jpeg": "image/jpeg",
+        "png": "image/png",
+        "gif": "image/gif",
+        "bmp": "image/bmp",
+        "tiff": "image/tiff",
+        "webp": "image/webp",
+        "svg": "image/svg+xml"
+    }
+
+    if extension not in media_types:
+        raise ValueError(f"could not determine an image type. image path: {path}")
+
+    return media_types[extension]
+
+def image_path_to_data(path):
+
+   return {"image_data": file_to_utf8(path),
+           "image_type": image_path_to_type(path)}

@@ -158,11 +158,24 @@ class ProjectManager:
                                     thinker,
                                     business_owner,
                                     idea,
+                                    sketch = None,
                                     store_path="requirements"):
         say(self.role, "\nDear Business Owner, in this meeting we'll work on creating requirements based on the 💡 idea",
             who_color = color.CYAN, message_color = color.YELLOW)
 
-        requirements = business_owner.idea_to_prompt(thinker, idea)
+        requirements = "requirements not created yet"
+        if sketch:
+            sketch_intel = business_owner.idea_with_sketch_to_intel(thinker,
+                                                                    idea,
+                                                                    sketch)
+            print(f"sketch intel: {sketch_intel}")
+
+            requirements = business_owner.idea_with_sketch_to_prompt(thinker,
+                                                                     idea,
+                                                                     sketch_intel)
+        else:
+            requirements = business_owner.idea_to_prompt(thinker, idea)
+
         self.record_requirement(idea, requirements, store_path)
 
         self.feature = Feature(requirements)

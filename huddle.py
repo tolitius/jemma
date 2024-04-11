@@ -51,7 +51,8 @@ def main():
                              project_manager,
                              business_owner,
                              engineer,
-                             args.prompt)
+                             args.prompt,
+                             args.sketch)
 
     if args.build_user_stories:
         flow.build_user_stories(brain,

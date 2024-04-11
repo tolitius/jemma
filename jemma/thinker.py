@@ -1,5 +1,5 @@
 import os, time
-from jemma.tools import color, say
+from jemma.tools import color, say, image_path_to_data
 
 import ollama
 import replicate
@@ -74,6 +74,49 @@ class Claude(Thinker):
         ## make sure ANTHROPIC_API_KEY is exported in shell
         ## or it is exported in a .env file
         self.client = client = Anthropic()
+
+    def see(self,
+            prompt,
+            image_path,
+            who="user",
+            max_tokens=1024,
+            action="👀 looking at the image... ",
+            mute=False,
+            sleep_time=1):
+
+        say(who, action + image_path)
+
+        image_data, image_type = image_path_to_data(image_path).values()
+
+        response = self.client.messages.create(
+                model=self.model_name,
+                max_tokens=max_tokens,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "image",
+                                "source": {
+                                    "type": "base64",
+                                    "media_type": image_type,
+                                    "data": image_data,
+                                    },
+                                },
+                            {
+                                "type": "text",
+                                "text": prompt,
+                                }
+                            ],
+                        }
+                    ],
+                )
+
+        saw_this = response.content[0].text
+
+        # print(color.RED + f">> {saw_this} <<" + color.END)
+
+        return saw_this
 
     def think(self, prompt, who="user", action="", mute=False, sleep_time=1): # sleep not to exceed the rate limit
 

@@ -322,3 +322,105 @@ Additional Considerations:
 
 By following this prompt, an AI model should be able to generate a self-sufficient and functional prototype of the Color Palette Generator web app using HTML, CSS, and JavaScript. The prototype should fulfill the specified requirements, provide an engaging user interface, and demonstrate the core functionality of the app idea.
 """
+
+def idea_with_sketch_to_intel(idea, sketch):
+    return f"""
+Analyze the UI sketch in the image and extract the following structured information to be used to recreate this interface with HTML, CSS and JavaScript:
+
+1. Identify all distinct UI components (text fields, labels, buttons, containers, etc.) and list them along with their:
+   - Component type (input, button, div, etc.)
+   - Text content
+   - Placeholder text (if applicable)
+   - Unique identifier (if applicable, e.g. "name", "toolbar", "upcoming-lesson", etc.)
+
+2. Describe the overall layout and visual structure of the interface, including:
+   - Relative positioning of components (e.g. "toolbar at top", "3 buttons below header", "2 column layout", etc.)
+   - Any visual grouping or separation of components
+   - Estimated dimensions and spacing (widths, heights, padding, margins)
+
+3. Identify any interactive elements and describe their apparent functionality, for example:
+   - "Courses dropdown opens menu on click"
+   - "New buttons add new slot on click"
+   - "'Concept' button likely opens a modal dialog", etc.
+
+4. Call out any key visual styling details, such as:
+   - Background colors
+   - Font sizes, weights, and styles
+   - Border styles
+   - Button styles
+
+Provide the extracted information in a structured JSON format like this:
+
+{{
+  "components": [
+    {{
+      "type": "input",
+      "id": "name",
+      "placeholder": "Name"
+    }},
+    ...
+  ],
+  "layout": {{
+    "positioning": [...],
+    "grouping": [...],
+    "spacing": [...]
+  }},
+  "interactivity": [...],
+  "styling": {{
+    "colors": [...],
+    "fonts": [...],
+    ...
+  }}
+}}
+    """
+
+def sketch_intel_to_requirements(idea, sketch_intel):
+    return f"""
+Title: Web App Prototype Prompt Generator
+
+Description:
+Create a prompt generator that takes a short-form web app idea and a description of a mockup and generates a detailed prompt for building a self-sufficient prototype using only HTML, CSS, and JavaScript. The generated prompt should guide an AI model to create a functional web app prototype based on the provided idea and the mockup description. The generated prompt should make sure that the prototype 100% aligns with the visual structure and interactivity described in the mockup.
+
+Web App Idea:
+{idea}
+
+Mockup Description:
+{sketch_intel}
+
+Prompt:
+[Web App Idea]
+Description: [A brief description of the web app idea]
+
+Desired Prompt Output:
+
+Title: [Web App Name]
+
+Description:
+[A detailed description of the web app, including its purpose, main features, and target audience]
+
+Requirements:
+1. [Requirement 1]
+2. [Requirement 2]
+3. [Requirement 3]
+...
+
+User Interface:
+[A description of the desired user interface, including layout, design elements, and user interactions based on the idea and mockup description]
+
+Functionality:
+[Detailed explanations of the app's functionality, including any necessary algorithms, data processing, or dynamic behavior based on the idea and mockup description]
+
+HTML Structure:
+[Guidelines for structuring the HTML code, including specific elements, classes, and IDs to be used based on the idea and mockup description]
+
+CSS Styling:
+[Instructions for styling the app using CSS, including color scheme, typography, layout, and responsive design considerations based on the idea and mockup description]
+
+JavaScript Interactivity:
+[Directions for implementing interactivity and dynamic functionality using JavaScript, including event handling, data manipulation, and API integration if applicable based on the idea and mockup description]
+
+Additional Considerations:
+[Any additional features, optimizations, or best practices to keep in mind while building the prototype based on the idea and mockup description]
+
+Note: The generated prompt should be clear, concise, and provide sufficient detail for an AI model to generate a functional web app prototype using only HTML, CSS, and JavaScript. The prompt should focus on guiding the model to create a self-sufficient prototype relying on jQuery, Twitter Bootstrap and DataTable libraries.
+"""
