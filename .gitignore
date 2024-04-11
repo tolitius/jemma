@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 prototype/
+requirements/
 .DS_Store

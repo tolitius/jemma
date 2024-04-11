@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='jemma',
-    version='0.1.42',
+    version='0.1.4200',
     description='convert ideas into code',
     author='tolitius',
     packages=find_packages(),

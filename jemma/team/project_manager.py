@@ -1,4 +1,5 @@
-from jemma.tools import say, color, open_local_browser
+import os
+from jemma.tools import say, color, open_local_browser, name_to_file_name
 from jemma.requirements.feature import Feature, UserStory
 
 class ProjectManager:
@@ -6,6 +7,20 @@ class ProjectManager:
         self.feature = feature
         self.role = role
         self.project_name = project_name
+
+    def record_requirement(self,
+                           name,
+                           requirement,
+                           path):
+        # create the directory if it doesn't exist
+        os.makedirs(path, exist_ok=True)
+
+        requirement_path = os.path.join(path,
+                                        name_to_file_name(name))
+        with open(requirement_path, "w") as requirement_file:
+            requirement_file.write(requirement)
+
+        print(f"storing requirements for \"{name}\" in \"{requirement_path}\"")
 
     def meet_to_create_user_stories(self,
                                     thinker,
@@ -142,9 +157,12 @@ class ProjectManager:
     def meet_to_create_requirements(self,
                                     thinker,
                                     business_owner,
-                                    idea):
+                                    idea,
+                                    store_path="requirements"):
         say(self.role, "\nDear Business Owner, in this meeting we'll work on creating requirements based on the 💡 idea",
             who_color = color.CYAN, message_color = color.YELLOW)
 
         requirements = business_owner.idea_to_prompt(thinker, idea)
+        self.record_requirement(idea, requirements, store_path)
+
         self.feature = Feature(requirements)

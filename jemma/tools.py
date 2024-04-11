@@ -1,6 +1,8 @@
 import webbrowser
 import os, argparse, sys, re
 
+from datetime import datetime
+
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -27,6 +29,13 @@ def read_file(path):
     with open(path, 'r') as file:
         data = file.read()
     return data
+
+def name_to_file_name(name, extension="txt"):
+
+    clean_name = re.sub(r'[^a-zA-Z0-9\s-]', '', name).replace(' ', '-').lower()
+
+    timestamp = datetime.now().strftime("%Y-%m-%d.%H-%M-%S-%f")[:-3]
+    return f"{clean_name}.{timestamp}.{extension}"
 
 def open_local_browser(dir_path):
    current_dir = os.getcwd()
