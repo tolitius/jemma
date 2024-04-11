@@ -1,6 +1,9 @@
 from jemma.tools import color
-from pyreadline3 import Readline
-readline = Readline()
+try:
+    from pyreadline3 import Readline
+    readline = Readline()
+except ImportError:
+    import readline
 
 def create_user_stories(brain,
                         project_manager,
