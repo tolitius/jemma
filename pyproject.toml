@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jemma"
-version = "0.1.4201"
+version = "0.1.4202"
 description = "jemma & her ai agents that build software"
 authors = [
     { name = "tolitius" },
@@ -18,7 +18,7 @@ dependencies = [
     "openai==1.14.3",
     "ollama==0.1.8",
     "replicate==0.25.1",
-    "pyreadline3==2.1.0; os_name == 'nt'"
+    "pyreadline3==3.4.1; os_name == 'nt'"
 ]
 
 [project.scripts]
