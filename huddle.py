@@ -1,4 +1,4 @@
-import argparse
+import argparse, os
 from dotenv import load_dotenv
 
 from jemma.tools import parse_cli_arguments
@@ -14,7 +14,9 @@ import jemma.thinker as thinker
 def main():
 
     ## ----------------------------- setup
-    load_dotenv()
+    env_path = os.path.join(os.getcwd(), '.env')
+    load_dotenv(dotenv_path=env_path)
+
     args = parse_cli_arguments()
     brain = thinker.make_brain(args)
 

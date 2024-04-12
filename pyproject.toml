@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jemma"
+version = "0.1.4201"
+description = "jemma & her ai agents that build software"
+authors = [
+    { name = "tolitius" },
+]
+readme = {file = "README.md", content-type = "text/markdown"}
+keywords = ["ai", "agents", "llm", "code generation"]
+
+dependencies = [
+    "python-dotenv==1.0.1",
+    "anthropic==0.21.3",
+    "openai==1.14.3",
+    "ollama==0.1.8",
+    "replicate==0.25.1",
+    "pyreadline3==2.1.0; os_name == 'nt'"
+]
+
+[project.scripts]
+jemma = "jemma.huddle:main"
+
+[project.urls]
+Homepage = "https://github.com/tolitius/jemma"
+Documentation = "https://github.com/tolitius/jemma?tab=readme-ov-file#-jemma"
+Repository = "https://github.com/tolitius/jemma"
+Issues = "https://github.com/tolitius/jemma/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["jemma*"]
