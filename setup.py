@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='jemma2',
+    name='jemma',
     version='0.1.4200',
     description='convert ideas into code',
     author='tolitius',
