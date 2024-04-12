@@ -323,58 +323,7 @@ Additional Considerations:
 By following this prompt, an AI model should be able to generate a self-sufficient and functional prototype of the Color Palette Generator web app using HTML, CSS, and JavaScript. The prototype should fulfill the specified requirements, provide an engaging user interface, and demonstrate the core functionality of the app idea.
 """
 
-def idea_with_sketch_to_intel(idea, sketch):
-    return f"""
-Analyze the UI sketch in the image and extract the following structured information to be used to recreate this interface with HTML, CSS and JavaScript:
-
-1. Identify all distinct UI components (text fields, labels, buttons, containers, etc.) and list them along with their:
-   - Component type (input, button, div, etc.)
-   - Text content
-   - Placeholder text (if applicable)
-   - Unique identifier (if applicable, e.g. "name", "toolbar", "upcoming-lesson", etc.)
-
-2. Describe the overall layout and visual structure of the interface, including:
-   - Relative positioning of components (e.g. "toolbar at top", "3 buttons below header", "2 column layout", etc.)
-   - Any visual grouping or separation of components
-   - Estimated dimensions and spacing (widths, heights, padding, margins)
-
-3. Identify any interactive elements and describe their apparent functionality, for example:
-   - "Courses dropdown opens menu on click"
-   - "New buttons add new slot on click"
-   - "'Concept' button likely opens a modal dialog", etc.
-
-4. Call out any key visual styling details, such as:
-   - Background colors
-   - Font sizes, weights, and styles
-   - Border styles
-   - Button styles
-
-Provide the extracted information in a structured JSON format like this:
-
-{{
-  "components": [
-    {{
-      "type": "input",
-      "id": "name",
-      "placeholder": "Name"
-    }},
-    ...
-  ],
-  "layout": {{
-    "positioning": [...],
-    "grouping": [...],
-    "spacing": [...]
-  }},
-  "interactivity": [...],
-  "styling": {{
-    "colors": [...],
-    "fonts": [...],
-    ...
-  }}
-}}
-    """
-
-def sketch_intel_to_requirements(idea, sketch_intel):
+def design_to_requirements(idea, design):
     return f"""
 Title: Web App Prototype Prompt Generator
 
@@ -385,7 +334,7 @@ Web App Idea:
 {idea}
 
 Mockup Description:
-{sketch_intel}
+{design}
 
 Prompt:
 [Web App Idea]

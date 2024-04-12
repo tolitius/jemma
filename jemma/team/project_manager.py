@@ -1,5 +1,5 @@
 import os
-from jemma.tools import say, color, open_local_browser, name_to_file_name
+from jemma.tools import say, color, open_local_browser, name_to_file_name, record_prototype
 from jemma.requirements.feature import Feature, UserStory
 
 class ProjectManager:
@@ -93,8 +93,8 @@ class ProjectManager:
 
         prototype = engineer.create_prototype(thinker,
                                               self.feature.requirements)
-        engineer.record_prototype(path,
-                                  prototype)
+        record_prototype(path,
+                         prototype)
         open_local_browser(path)
 
         return prototype
@@ -116,8 +116,8 @@ class ProjectManager:
                                                  prototype,
                                                  feedback)
 
-        engineer.record_prototype(path,
-                                  refactored)
+        record_prototype(path,
+                         refactored)
         open_local_browser(path)
 
         return refactored
@@ -154,28 +154,61 @@ class ProjectManager:
     def user_stories_to_requirement(self):
         self.feature = Feature(self.feature.export_user_stories_titles_and_criteria())
 
+    def meet_to_create_mockups(self,
+                               thinker,
+                               designer,
+                               idea,
+                               sketch,
+                               store_path="requirements"):
+
+        say(self.role, "\nDear UI/UX Designer, in this meeting we'll work on creating mockups based on the 💡 idea & sketch",
+            who_color = color.CYAN, message_color = color.YELLOW)
+
+        requirements = designer.skech_to_description(thinker,
+                                                     sketch,
+                                                     idea)
+
+        self.record_requirement("mockup", requirements, store_path)
+        self.feature = Feature(requirements)
+
+        prototype = designer.sketch_to_prototype(thinker,
+                                                 requirements,
+                                                 sketch)
+        record_prototype(store_path,
+                         prototype)
+        open_local_browser(store_path)
+
+        return prototype
+
     def meet_to_create_requirements(self,
                                     thinker,
                                     business_owner,
                                     idea,
-                                    sketch = None,
                                     store_path="requirements"):
+
         say(self.role, "\nDear Business Owner, in this meeting we'll work on creating requirements based on the 💡 idea",
             who_color = color.CYAN, message_color = color.YELLOW)
 
-        requirements = "requirements not created yet"
-        if sketch:
-            sketch_intel = business_owner.idea_with_sketch_to_intel(thinker,
-                                                                    idea,
-                                                                    sketch)
-            print(f"sketch intel: {sketch_intel}")
-
-            requirements = business_owner.idea_with_sketch_to_prompt(thinker,
-                                                                     idea,
-                                                                     sketch_intel)
-        else:
-            requirements = business_owner.idea_to_prompt(thinker, idea)
+        requirements = business_owner.idea_to_prompt(thinker, idea)
 
         self.record_requirement(idea, requirements, store_path)
+
+        self.feature = Feature(requirements)
+
+    def meet_to_address_feedback(self,
+                                 thinker,
+                                 designer,
+                                 sketch,
+                                 feedback,
+                                 store_path="requirements"):
+
+        say(self.role, "\nDear UI/UX Designer, in this meeting we'll look at the sketch to address user's the feedback",
+            who_color = color.CYAN, message_color = color.YELLOW)
+
+        requirements = designer.skech_to_description(thinker,
+                                                     sketch,
+                                                     feedback)
+
+        self.record_requirement("mockup", requirements, store_path)
 
         self.feature = Feature(requirements)

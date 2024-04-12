@@ -11,9 +11,13 @@ class UserStory:
         return f"Title: {self.title}\nDescription: {self.description}\nAcceptance Criteria:\n{self.acceptance_criteria}"
 
 class Feature:
-    def __init__(self, requirements, title="feature"):
+    def __init__(self,
+                 requirements="follow the instructions",
+                 title="feature",
+                 sketch=""):
         self.title = title
         self.requirements = requirements
+        self.sketch = sketch
         self.user_stories = {}
 
     def add_user_story(self, user_story):

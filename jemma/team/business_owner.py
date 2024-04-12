@@ -87,19 +87,10 @@ class BusinessOwner:
                              self.title,
                              mute=True)
 
-    def idea_with_sketch_to_intel(self,
-                                  thinker,
-                                  idea,
-                                  sketch):
-        say(self.title, "🔍 collecting intel about the sketch ...", message_color=color.DARKCYAN)
-        return thinker.see(prompt.idea_with_sketch_to_intel(idea, sketch),
-                           sketch,
-                           self.title)
-
-    def idea_with_sketch_to_prompt(self,
-                                   thinker,
-                                   idea,
-                                   sketch_intel):
-        say(self.title, "📚 creating detailed requirements (for: idea + sketch) ...🖋️", message_color=color.DARKCYAN)
-        return thinker.think(prompt.sketch_intel_to_requirements(idea, sketch_intel),
+    def idea_with_desing_to_requirements(self,
+                                         thinker,
+                                         idea,
+                                         design):
+        say(self.title, "📚 creating detailed requirements (for: idea + design) ...🖋️", message_color=color.DARKCYAN)
+        return thinker.think(prompt.design_to_requirements(idea, design),
                              self.title)

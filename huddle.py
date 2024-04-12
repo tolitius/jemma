@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 from jemma.tools import parse_cli_arguments
 from jemma.requirements.feature import Feature
+from jemma.team.ui_ux_designer import UiUxDesigner
 from jemma.team.business_owner import BusinessOwner
 from jemma.team.engineer import Engineer
 from jemma.team.tester import Tester
@@ -30,6 +31,9 @@ def main():
     feature = Feature(requirements)
 
     ## ----------------------------- create a team
+    designer = UiUxDesigner("an experienced UI/UX designer with attention to detail, "
+                             "focused on building beautiful and intuitive user interfaces")
+
     business_owner = BusinessOwner("an experienced business owner with attention to detail, "
                                    "focused on building requirements for engineers to build software products")
 
@@ -51,6 +55,7 @@ def main():
     if args.build_prototype:
         flow.build_prototype(brain,
                              project_manager,
+                             designer,
                              business_owner,
                              engineer,
                              args.prompt,

@@ -37,6 +37,31 @@ def name_to_file_name(name, extension="txt"):
     timestamp = datetime.now().strftime("%Y-%m-%d.%H-%M-%S-%f")[:-3]
     return f"{clean_name}.{timestamp}.{extension}"
 
+def record_prototype(path, prototype):
+
+   os.makedirs(path, exist_ok=True)
+
+   # write the CSS file
+   css_file_path = os.path.join(path, "app.css")
+   with open(css_file_path, "w") as css_file:
+      css_file.write(prototype["css"])
+
+   # write the JavaScript file
+   js_file_path = os.path.join(path, "app.js")
+   with open(js_file_path, "w") as js_file:
+      js_file.write(prototype["js"])
+
+   # write the HTML file
+   html_file_path = os.path.join(path, "index.html")
+   with open(html_file_path, "w") as html_file:
+      html_file.write(prototype["html"])
+
+   print("prototype files created successfully:")
+   print(f"- {path}/index.html")
+   print(f"- {path}/app.js")
+   print(f"- {path}/app.css")
+
+
 def open_local_browser(dir_path):
    current_dir = os.getcwd()
    try:

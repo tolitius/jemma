@@ -28,30 +28,6 @@ class Engineer:
 
         return {"css": css, "js": js, "html": html}
 
-    def record_prototype(self, path, prototype):
-        # Create the directory if it doesn't exist
-        os.makedirs(path, exist_ok=True)
-
-        # Write the CSS file
-        css_file_path = os.path.join(path, "app.css")
-        with open(css_file_path, "w") as css_file:
-            css_file.write(prototype["css"])
-
-        # Write the JavaScript file
-        js_file_path = os.path.join(path, "app.js")
-        with open(js_file_path, "w") as js_file:
-            js_file.write(prototype["js"])
-
-        # Write the HTML file
-        html_file_path = os.path.join(path, "index.html")
-        with open(html_file_path, "w") as html_file:
-            html_file.write(prototype["html"])
-
-        print("prototype files created successfully:")
-        print(f"- {path}/index.html")
-        print(f"- {path}/app.js")
-        print(f"- {path}/app.css")
-
     def refactor_prototype(self,
                            thinker,
                            requirements,
@@ -72,7 +48,7 @@ class Engineer:
                                                          feedback),
                            "Engineer",
                            mute=True,
-                            action="♻️  cooking javascript 🎮 (a.k.a. \"master of interactions\")")
+                           action="♻️  cooking javascript 🎮 (a.k.a. \"master of interactions\")")
 
         html = thinker.think(code.refactor_html_file(requirements,
                                                      css,

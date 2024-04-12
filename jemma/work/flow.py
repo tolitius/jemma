@@ -50,23 +50,39 @@ def ask_for_feedback():
 
 def build_prototype(brain,
                     project_manager,
+                    designer,
                     business_owner,
                     engineer,
                     prompt = None,
                     sketch = None):
 
+    prototype = None
+
     if prompt:
-        project_manager.meet_to_create_requirements(brain,
-                                                    business_owner,
-                                                    prompt,
-                                                    sketch)
-    prototype = project_manager.meet_to_build_prototype(brain,
-                                                        engineer)
+        if sketch:
+            prototype = project_manager.meet_to_create_mockups(brain,
+                                                               designer,
+                                                               prompt,
+                                                               sketch)
+        else:
+            project_manager.meet_to_create_requirements(brain,
+                                                        business_owner,
+                                                        prompt)
+
+    if not prototype:
+        prototype = project_manager.meet_to_build_prototype(brain,
+                                                            engineer)
 
     while True:
         feedback = ask_for_feedback()
         if not feedback:
             break
+
+        if sketch:
+            project_manager.meet_to_address_feedback(brain,
+                                                     designer,
+                                                     sketch,
+                                                     feedback)
 
         prototype = project_manager.meet_to_refactor(brain,
                                                      engineer,
