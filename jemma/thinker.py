@@ -26,7 +26,8 @@ class Ollama(Thinker):
     def think(self, prompt, who="user", action="", mute=False, sleep_time=0):
         thinking = ollama.generate(model=self.model_name,
                                    prompt=prompt,
-                                   options={'num_predict': 4096},
+                                   options={'num_predict': -1,
+                                            'num_ctx': 4096},
                                    stream=True)
         if action != "" or not mute:
             say(who, action)
