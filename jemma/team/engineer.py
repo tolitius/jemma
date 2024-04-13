@@ -1,6 +1,7 @@
 import os, json
 from jemma.prompt.engineer.clarify import check_whether_clarification_needed
 import jemma.prompt.engineer.code as code
+import jemma.prompt.engineer.game as game
 from jemma.tools import say, color
 
 class Engineer:
