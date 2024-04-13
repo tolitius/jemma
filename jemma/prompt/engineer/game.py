@@ -25,6 +25,19 @@ Please generate a complete CSS file that fulfills these requirements and provide
 do NOT surround the file with markdown backticks: ```css ... ```
 start the response with /* Global Styles */ and follow with CSS source according the guidelines.
 
+make sure the game-container and game-canvas are styled by ids as follows:
+#game-container {{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}}
+#game-canvas {{
+  border: 2px solid #00FFFF;
+  box-shadow: 0 0 20px 0 #00FFFF;
+}}
+
+
 (!) Use Phaser's default styles as a starting point and customize them as needed to match the game's aesthetic requirements. Since we are using built-in shapes instead of images, focus on styling the shapes using CSS properties like background color, border, and border-radius."
 
 EXAMPLE OF USING DEFAULT SHAPES IN PHASER:
@@ -99,8 +112,7 @@ The game implementation should include the following features and components:
    - Ensure the user interface is responsive and provides a smooth user experience.
 
 7. Sound and Visual Effects:
-   - Incorporate appropriate sound effects and background music to enhance the gaming experience.
-   - Use Phaser's sound API to play audio files and manage sound playback.
+   - Make sure there is no sound in the game
    - Create visual effects (e.g., particle effects, animations) to provide visual feedback and enhance the game's aesthetics.
 
 8. Game State Management:
@@ -122,6 +134,120 @@ The game implementation should include the following features and components:
 - Ensure that the generated JavaScript file seamlessly integrates with the provided CSS file.
 - do not forget to close all the code forms in parentheses, brackets, etc. $(function() {{ foo = [..] }});
 - don't use todo action comments such as "// Add more test data here" or "// add code for to do X": instead IMPLEMENT the data / action
+
+Implement the startGame function completely, including all the necessary game logic and interactions. The startGame function should be the entry point for the game and should set up the game environment, initialize game objects, and start the game loop.
+
+do not include a "preload" function since we are not using images, but instead built-in shapes such as "circles, squares, dots, etc.".
+
+instead use basic shapes in "create" function to represent game elements.
+### EXAMPLE OF USING BUILT-IN SHAPES IN PHASER CREATE FUNCTION:
+function create() {{
+  // Set up the game world
+  game.physics.startSystem(Phaser.Physics.ARCADE);
+  game.stage.backgroundColor = '#000000';
+
+  // Create the player's spaceship
+  player = game.add.graphics(400, 550);
+  player.beginFill(0xffffff);
+  player.drawRect(-20, -20, 40, 40);
+  player.endFill();
+  game.physics.arcade.enable(player);
+  player.body.collideWorldBounds = true;
+  player.body.immovable = true;
+
+  // Create the enemy ships
+  enemies = game.add.group();
+  enemies.enableBody = true;
+  enemies.physicsBodyType = Phaser.Physics.ARCADE;
+
+  // Create the player's projectiles
+  playerProjectiles = game.add.group();
+  playerProjectiles.enableBody = true;
+  playerProjectiles.physicsBodyType = Phaser.Physics.ARCADE;
+
+  // Create the enemy projectiles
+  enemyProjectiles = game.add.group();
+  enemyProjectiles.enableBody = true;
+  enemyProjectiles.physicsBodyType = Phaser.Physics.ARCADE;
+
+  // Create the UI elements
+  scoreText = game.add.text(16, 16, 'Score: 0', {{ fontSize: '32px', fill: '#fff' }});
+  highScoreText = game.add.text(game.width - 200, 16, 'High Score: 0', {{ fontSize: '32px', fill: '#fff' }});
+  startButton = game.add.text(game.width / 2, game.height / 2, 'Start Game', {{ fontSize: '24px', fill: '#fff' }});
+  startButton.anchor.set(0.5);
+  startButton.inputEnabled = true;
+  startButton.events.onInputDown.add(startGame, this);
+
+  // Initialize game variables
+  score = 0;
+  highScore = 0;
+  gameStarted = false;
+}}
+
+make action functions to to create basic shapes instead of using loaded assets
+### EXAMPLE OF ACTION FUNCTION TO CREATE BASIC SHAPES:
+function fireBullet(x, y, xVelocity, yVelocity, group) {{
+  var bullet = group.create(x, y, null);
+  var graphics = game.add.graphics(0, 0);
+  graphics.beginFill(0x00FF00);
+  graphics.drawRect(0, 0, 10, 20);
+  graphics.endFill();
+  bullet.addChild(graphics);
+  bullet.body.velocity.x = xVelocity;
+  bullet.body.velocity.y = yVelocity;
+}}
+
+since we are using built-in shapes,
+make sure to create individual Sprite objects for each object and then draw the shapes on those sprites.
+### EXAMPLE OF CREATING SPRITES AND DRAWING SHAPES:
+function spawnEnemies() {{
+  if (enemies.countLiving() === 0) {{
+    for (var y = 100; y < 400; y += 50) {{
+      for (var x = 100; x < 700; x += 50) {{
+        var enemy = enemies.create(x, y, null);
+        var graphics = game.add.graphics(0, 0);
+        graphics.beginFill(0xFF0000);
+        graphics.drawCircle(0, 0, 20);
+        graphics.endFill();
+        enemy.addChild(graphics);
+        enemy.body.velocity.y = ENEMY_SPEED;
+      }}
+    }}
+  }}
+}}
+
+make sure to load the game in Phaser that matches CSS sizing as well as attaches to the game container:
+parent: 'game-container',
+canvas: document.getElementById('game-canvas'),
+
+### EXAMPLE OF LOADING THE GAME IN PHASER:
+// make sure the Phaser Game starts exactly like this:
+var game = new Phaser.Game({{
+  width: 800,  // Match the CSS
+  height: 600, // Match the CSS
+  renderer: Phaser.AUTO,
+  parent: 'game-container',
+  canvas: document.getElementById('game-canvas'),
+  state: {{ preload: preload, create: create, update: update }}
+}});
+
+make sure not to play an animation on a sprite that doesn't have a loaded texture or spritesheet
+for this add a remove effects correctly:
+### EXAMPLE OF REMOVING EFFECTS:
+function createExplosion(x, y) {{
+  var explosion = explosions.create(x, y, null);
+  var graphics = game.add.graphics(0, 0);
+  graphics.beginFill(0xFF9900);
+  graphics.drawCircle(0, 0, 50);
+  graphics.endFill();
+  explosion.addChild(graphics);
+  explosion.scale.set(0.5);
+
+  // Remove the explosion after a short delay
+  game.time.events.add(200, function() {{
+    explosion.kill();
+  }}, this);
+}}
 
 do NOT surround the file with markdown backticks: ```javascript ... ```
 - start your response with a comment "// game implementation"
@@ -161,15 +287,8 @@ Given requirements, a CSS file (based on Phaser), and a JavaScript file, your ta
 The HTML file should import these in the following order:
 
 - local, previously generated, CSS: app.css
-- remote Phaser framework library ("https://cdn.jsdelivr.net/npm/phaser@3.80.0/dist/phaser.js")
+- remote Phaser framework library ("https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.js")
 - local, previously generated, JavaScript: app.js
-
-example:
-
-  <link rel="stylesheet" type="text/css" href="app.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.0/dist/phaser.js"></script>
-  <script src="app.js"></script>
 
 and adhere to the following requirements to create the best layout and user experience possible.
 
@@ -182,44 +301,27 @@ and adhere to the following requirements to create the best layout and user expe
 # JAVASCRIPT FILE
 {js}
 
-follow these guidelines to create the HTML file:
-
-# GUIDELINES
-
-- Link the previously generated CSS file in the head section using the appropriate `<link>` tag.
-- Place the previously generated JavaScript file before the closing `</body>` tag using the `<script>` tag.
-- Ensure that the file paths for the CSS and JavaScript files are correct and relative to the HTML file.
-
-- do NOT create elements that are not required by the user story.
-
-- (!) make sure layout pieces do not overlap or are not hidden by other elements.
-
-Please generate a complete and semantic HTML file that fulfills these requirements and creates the best layout and user experience possible. The generated HTML file should seamlessly integrate with the previously generated CSS and JavaScript files to form a cohesive web prototype.
-
-do NOT surround the file with markdown backticks: ```html ... ```
-start the response with <!DOCTYPE html> and follow the guidelines.
-
-IMPORTANT: Provide the HTML file content ONLY, without any additional text or explanations: no text headers, no footers. The HTML file should be well-structured, organized, and easy to understand for developers working on the web prototype.
-
-please create an HTML file that serves as the container for the game. Include the necessary script tags to load the Phaser library and the game's JavaScript file. Also, include any required HTML elements for the game's user interface. Since we are using built-in shapes, no additional HTML elements are needed for game objects.
-
-# EXAMPLE OF LOADING PHASER LIBRARY AND GAME SCRIPT:
+HTML body should only have the "game-container" div and NO OTHER COMPONENTS:
+### EXAMPLE OF HTML BODY:
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Arkanoid Game</title>
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-  <link rel="stylesheet" href="game.css">
+  <title>Retro Galaga Game</title>
+  <link rel="stylesheet" type="text/css" href="app.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="game-container"></div>
-  <script src="game.js"></script>
+  <div id="game-container"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
 
+do not add scores, buttons, or any other elements to the HTML file. The game will be controlled by the JavaScript file and styled by the CSS file.
 
-# IMPORTANT
-(!) make sure ALL the requirements and actions are addressed in the HTML file.
+IMPORTANT: Provide the HTML file content ONLY, without any additional text or explanations: no text headers, no footers.
+do NOT surround the file with markdown backticks: ```html ... ```
+start the response with <!DOCTYPE html> and end with </html>
 """
 
 
@@ -316,7 +418,7 @@ Please refactor the HTML code, taking into account the original requirements, th
 1. Ensure that the refactored HTML aligns with the original requirements and incorporates the user's suggestions where appropriate.
 2. Optimize the HTML structure for better semantics, accessibility, and SEO.
 3. Use appropriate HTML5 elements and attributes where applicable.
-4. Ensure compatibility with the refactored CSS code, especially considering the use of Phaser conventions.
+4. Ensure compatibility with the refactored CSS code, especially considering the use of Twitter Bootstrap classes and conventions.
 5. Integrate the refactored JavaScript code seamlessly, making sure that all necessary elements have the correct IDs, classes, and data attributes required by Phaser.
 6. Improve the overall user experience and usability of the HTML page based on the user's feedback.
 
