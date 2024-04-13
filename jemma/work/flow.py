@@ -4,7 +4,50 @@ try:
 except ImportError:
     import readline
 
-from jemma.tools import color
+from functools import partial
+from jemma.tools import color, jemma_say
+
+def compose_tasks(brain,
+                  project_manager,
+                  designer,        ## TODO: project_manager should have a designer OR there should be a Team
+                  tasks,
+                  args):
+
+    prompt = args.prompt
+    sketch = args.sketch
+
+    task_functions = {
+        'sketch-to-doc': {
+            'fn': partial(project_manager.meet_to_discuss_mockups, brain, designer, prompt, sketch),
+            'is_partial': False # this function does not require any more arguments
+        },
+        'sketch-to-prototype': {
+            'fn': partial(project_manager.meet_to_convert_design_to_prototype, brain, designer, sketch),
+            'is_partial': True
+        }
+    }
+
+    # validate all tasks before execution
+    unknown_tasks = [task for task in tasks if task not in task_functions]
+    if unknown_tasks:
+        raise Exception(f"don't know how to do this yet: {', '.join(unknown_tasks)}")
+
+    ## handrolling Clojure's threading macro
+    done = None
+    for task in tasks:
+        fn = task_functions[task]['fn']
+        is_partial = task_functions[task]['is_partial']
+
+        if is_partial:
+            jemma_say(f"task \"{task}\" <<< {done}")
+            done = fn(done)
+        else:
+            jemma_say(f"task \"{task}\" <<< [no input]")
+            done = fn()
+
+        jemma_say(f"task {task} >>> {done}")
+
+    return done
 
 def create_user_stories(brain,
                         project_manager,
@@ -96,3 +139,20 @@ def test_prototype(brain,
                    tester):
     return project_manager.meet_to_test_prototype(brain,
                                                   tester)
+
+## create a team to encapsulate agents
+def compose(brain,
+            project_manager,
+            designer,
+            business_owner,
+            engineer,
+            tester,
+            args):
+
+    compose_tasks(brain,
+                  project_manager,
+                  designer,
+                  args.tasks,
+                  args)
+
+    return None

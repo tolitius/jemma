@@ -85,6 +85,8 @@ class Claude(Thinker):
             mute=False,
             sleep_time=1):
 
+        # return "not looking"
+
         say(who, action + image_path)
 
         image_data, image_type = image_path_to_data(image_path).values()

@@ -12,6 +12,8 @@ class color:
    YELLOW = '\033[93m'
    RED = '\033[91m'
    GRAY_DARK = '\033[38;5;232m'
+   GRAY_ME = '\033[38;5;239m'
+   GRAY_DIUM = '\033[38;5;240m'
    GRAY_MEDIUM = '\033[38;5;244m'
    GRAY_LIGHT = '\033[38;5;250m'
    GRAY_VERY_LIGHT = '\033[38;5;254m'
@@ -21,9 +23,21 @@ class color:
 
 def say(who, message,
         who_color = color.PURPLE,
-        message_color = color.CYAN):
+        message_color = color.CYAN,
+        newline=True):
    print("\n" + color.BLUE + "> " + color.BOLD + who_color + color.UNDERLINE + who + color.END + ": ", end="")
-   print(message_color + message)
+   if newline:
+      print(message_color + message + color.END)
+   else:
+      print(message_color + message + color.END, end="")
+
+def jemma_say(message,
+              message_color = color.GRAY_ME):
+   say("[jemma]",
+       message,
+       color.GRAY_DIUM,
+       message_color,
+       False)
 
 def read_file(path):
     with open(path, 'r') as file:
@@ -88,6 +102,9 @@ def parse_cli_arguments():
         epilog='thoughts in, software out'
     )
 
+    parser.add_argument('--compose', metavar='actions', type=str, nargs='*', default=None,
+                        help='provide a set of actions to compose (e.g., \'--compose get-milk feed-kids launch-mars-expedition\')')
+
     parser.add_argument('--requirements', metavar='path', type=str, help='path to a text file with requirements')
     parser.add_argument('--prompt', metavar='prompt', type=str, help='short idea to convert to creation')
     parser.add_argument('--sketch', metavar='sketch', type=str, help='a mockup or a hand drawn sketch to convert to a prototype')
@@ -108,6 +125,13 @@ def parse_cli_arguments():
         sys.exit(1)
 
     args = parser.parse_args()
+
+    if args.compose:
+       tasks = [task.strip() for task in args.compose]
+       args.tasks = tasks
+    else:
+       args.tasks = None
+
     return args
 
 

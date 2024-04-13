@@ -20,7 +20,7 @@ class ProjectManager:
         with open(requirement_path, "w") as requirement_file:
             requirement_file.write(requirement)
 
-        print(f"storing requirements for \"{name}\" in \"{requirement_path}\"")
+        print(color.GRAY_MEDIUM + f"storing requirements for \"{name}\" in \"{requirement_path}\"" + color.END)
 
     def meet_to_create_user_stories(self,
                                     thinker,
@@ -153,6 +153,44 @@ class ProjectManager:
 
     def user_stories_to_requirement(self):
         self.feature = Feature(self.feature.export_user_stories_titles_and_criteria())
+
+    def meet_to_discuss_mockups(self,
+                                thinker,
+                                designer,
+                                idea,
+                                sketch,
+                                store_path="requirements"):
+
+        say(self.role, "\nDear UI/UX Designer, in this meeting we'll work on creating mockups based on the 💡 idea & sketch",
+            who_color = color.CYAN, message_color = color.YELLOW)
+
+        requirements = designer.skech_to_description(thinker,
+                                                     sketch,
+                                                     idea)
+
+        self.record_requirement("mockup", requirements, store_path)
+        self.feature = Feature(requirements)
+
+        return requirements
+
+    def meet_to_convert_design_to_prototype(thinker,
+                                            designer,
+                                            sketch,
+                                            design):
+
+        prototype = designer.sketch_to_prototype(thinker,
+                                                 design,
+                                                 sketch)
+        return prototype
+
+    def record_and_open_prototype(self,
+                                  prototype,
+                                  path="prototype"):
+        record_prototype(path,
+                         prototype)
+        open_local_browser(path)
+
+        return prototype
 
     def meet_to_create_mockups(self,
                                thinker,

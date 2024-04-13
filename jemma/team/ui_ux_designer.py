@@ -49,6 +49,7 @@ class UiUxDesigner:
                              focus):
 
         say(self.title, "🎨 looking at the sketch very closely now ...", message_color=color.DARKCYAN)
-        return thinker.see(prompt.sketch_to_description(focus),
+        return thinker.see(prompt.sketch_to_row_by_row(focus),
+                           # prompt.sketch_to_description(focus),
                            sketch,
                            self.title)

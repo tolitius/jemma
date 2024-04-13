@@ -140,6 +140,47 @@ example:
 (!) make sure the HTML file includes ALL the content from the image data: ALL components, ALL text, ALL labels
 """
 
+def sketch_to_row_by_row(focus):
+    return f"""You are an AI-powered UI/UX Designer agent.
+Please analyze the provided image and generate a detailed row-by-row description of the user interface.
+
+You are also optinally given a user feedback to focus on. Please return it in the response as well.
+### USER FEEDBACK
+{focus}
+
+For each row, include the following details:
+
+1. Row number and overall description
+2. Components present in the row (e.g., navigation bar, buttons, input fields, images, text, etc.)
+3. Size and dimensions of each component (e.g., width, height, padding, margin)
+4. Alignment and positioning of components within the row (e.g., left-aligned, right-aligned, centered, evenly spaced)
+5. Text content, labels, and placeholders for each component
+6. Color scheme and visual styles applied to components (e.g., background color, font color, font size, font weight)
+7. Any specific interactions or behaviors associated with components in the row (e.g., hover effects, click actions)
+8. Responsive behavior for different screen sizes (e.g., stacking, wrapping, resizing)
+
+Please provide the description in a clear and structured format, separating each row with a heading and using bullet points for individual components and their details. Be as specific and comprehensive as possible to ensure accurate implementation by the Engineer agent.
+
+Example format:
+
+Row 1:
+- Description: Header section with navigation menu
+- Components:
+  - Logo image (width: 150px, height: 50px, left-aligned)
+  - Navigation menu (right-aligned, evenly spaced)
+    - Menu items: Home, About, Services, Contact (font: Arial, size: 16px, color: #333333)
+  - Background color: #FFFFFF
+- Responsive behavior:
+  - On screens below 768px width:
+    - Logo and navigation menu stack vertically
+    - Menu items collapse into a hamburger icon
+
+Row 2:
+...
+
+Please proceed with the image analysis and provide the row-by-row description, and at the end provide the original user feedback unchanged ({focus}).
+"""
+
 def sketch_to_description(focus):
     return f"""You are an AI-powered UI/UX Designer agent.
 Your task is given an image data, generate a VERY detailed and comprehensive description of the image data.
@@ -162,7 +203,7 @@ You are also given a focus area of the image data to concentrate on.
 
 ### OUTPUT STRUCTURE
 
-<very comprehensive requirements>
+<very comprehensive description of components and their layout>
 
 <focus>
 {focus}

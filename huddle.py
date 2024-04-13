@@ -47,6 +47,15 @@ def main():
 
     ## ----------------------------- rock & roll
 
+    if args.tasks:
+        flow.compose(brain,
+                     project_manager,
+                     designer,
+                     business_owner,
+                     engineer,
+                     tester,
+                     args)
+
     if args.user_stories:
         flow.create_user_stories (brain,
                                   project_manager,
