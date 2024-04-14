@@ -140,45 +140,142 @@ example:
 (!) make sure the HTML file includes ALL the content from the image data: ALL components, ALL text, ALL labels
 """
 
-def sketch_to_row_by_row(focus):
+def sketch_to_layout(focus):
     return f"""You are an AI-powered UI/UX Designer agent.
-Please analyze the provided image and generate a detailed row-by-row description of the user interface.
-
+You are given a wireframe image data to analyze and generate a detailed description of Component Layout and Positioning.
 You are also optinally given a user feedback to focus on. Please return it in the response as well.
 ### USER FEEDBACK
 {focus}
 
-For each row, include the following details:
+Please analyze the provided wireframe and generate a structured description of the layout and component positioning. Pay close attention to the side-by-side arrangement of sections and components. Provide specific details based on the visual information present in the wireframe.
 
-1. Row number and overall description
-2. Components present in the row (e.g., navigation bar, buttons, input fields, images, text, etc.)
-3. Size and dimensions of each component (e.g., width, height, padding, margin)
-4. Alignment and positioning of components within the row (e.g., left-aligned, right-aligned, centered, evenly spaced)
-5. Text content, labels, and placeholders for each component
-6. Color scheme and visual styles applied to components (e.g., background color, font color, font size, font weight)
-7. Any specific interactions or behaviors associated with components in the row (e.g., hover effects, click actions)
-8. Responsive behavior for different screen sizes (e.g., stacking, wrapping, resizing)
+1. Identify the main sections or containers in the layout
+   - List the sections in the order they appear vertically
+   - Clearly specify any sections that are positioned side by side horizontally
 
-Please provide the description in a clear and structured format, separating each row with a heading and using bullet points for individual components and their details. Be as specific and comprehensive as possible to ensure accurate implementation by the Engineer agent.
+2. For each main section, describe the components within it
+   - List the components in the order they appear within the section
+   - Specify the relative positioning of components (e.g., aligned to the left, centered, aligned to the right)
+   - Clearly indicate any components that are positioned side by side horizontally
+   - Mention any nested components and their parent-child relationships
 
-Example format:
+3. Provide a detailed description of each component
+   - Specify the component type (e.g., text, button, image, input field)
+   - Describe the content or placeholder text of the component
+   - Mention any icons or visual elements associated with the component
 
-Row 1:
-- Description: Header section with navigation menu
-- Components:
-  - Logo image (width: 150px, height: 50px, left-aligned)
-  - Navigation menu (right-aligned, evenly spaced)
-    - Menu items: Home, About, Services, Contact (font: Arial, size: 16px, color: #333333)
-  - Background color: #FFFFFF
-- Responsive behavior:
-  - On screens below 768px width:
-    - Logo and navigation menu stack vertically
-    - Menu items collapse into a hamburger icon
+4. Describe any sections or components that span across multiple columns or rows
+   - Indicate if a section or component spans the full width or height of its container
+   - Specify any components that are positioned relative to other components or sections
 
-Row 2:
+5. Clarify the horizontal and vertical arrangement of sections and components
+   - Based on the provided wireframe, specify the arrangement of all its sections
+   - Describe how components are aligned within each section (e.g., left-aligned, centered, right-aligned)
+
+6. Double-check the side-by-side arrangement of sections and components
+   - Verify that any side-by-side arrangements are accurately identified and described
+   - Ensure that the positioning of sections and components is consistent with the visual information in the wireframe
+
+7. Provide any additional observations or notes relevant to the layout and positioning
+
+Please analyze the wireframe carefully and provide a structured description based on the visual information available. Use the following format for your response:
+
+1. Main Sections:
+   - Section 1 (e.g., Header)
+     - Component 1 (type, content, positioning)
+     - Component 2 (type, content, positioning)
+   - Section 2 (e.g., Main Content)
+     - Component 1 (type, content, positioning)
+       - Nested Component (type, content, positioning)
+     - Component 2 (type, content, positioning)
+
+2. Side-by-Side Sections/Components:
+   - Section or Component (description, side-by-side arrangement)
+
+3. Full-width or Full-height Sections/Components:
+   - Section or Component (description, spanning details)
+
+4. Relatively Positioned Components:
+   - Component (description, positioning relative to other components or sections)
+
+5. Horizontal and Vertical Arrangement:
+   - Sections (horizontal or vertical arrangement)
+   - Components (alignment within sections)
+
+6. Additional Observations:
+   - Any other relevant notes or observations about the layout and positioning
+
+(!) It is important to identify
+- ALL the components in the wireframe from top to bottom
+- the components, cards that are positioned side by side horizontally: provide a detailed description of their relative positioning.
+- components that live inside other components: provide a clear parent-child relationship.
+
+Please proceed with analyzing the wireframe and provide the structured description based on the available visual information. Ensure that the side-by-side arrangement of sections and components is accurately captured.
+And at the end provide the original user feedback unchanged ({focus}).
+"""
+
+def sketch_to_specification(focus):
+    return f"""You are an AI-powered UI/UX Designer agent.
+You are given a wireframe image data to analyze and generate a detailed Component Specification.
+You are also optinally given a user feedback to focus on. Please return it in the response as well.
+### USER FEEDBACK
+{focus}
+
+Based on the layout and component positioning described in the previous prompt, please provide detailed specifications for each identified component. Include the following information:
+
+1. Component Type:
+   - Specify the type of the component (e.g., button, input field, text, image, icon)
+
+2. Size and Dimensions:
+   - Provide the size and dimensions of the component, if visually apparent or specified in the wireframe
+   - Include width, height, padding, and margin values, if applicable
+   - If the size is not explicitly specified, provide an estimate based on the visual proportions
+
+3. Text Content and Labels:
+   - Transcribe any text content, labels, or placeholders associated with the component
+   - Specify the font family, size, weight, and color of the text, if visually apparent or specified in the wireframe
+
+4. Color Scheme and Visual Styles:
+   - Describe the color scheme of the component, including background color, border color, and any other relevant colors
+   - Specify the visual styles, such as border thickness, border radius, shadow, or gradient, if applicable
+
+5. Icons and Visual Elements:
+   - Describe any icons or visual elements associated with the component
+   - Provide details on the icon style, color, and size, if visually apparent or specified in the wireframe
+
+6. States and Interactions:
+   - Describe any visible states or interactions associated with the component, such as hover, active, or disabled states
+   - Specify any visual changes or effects that occur during these states or interactions
+
+7. Responsive Behavior:
+   - If the component's appearance or behavior is expected to change based on screen size or device, describe the responsive behavior
+   - Specify any modifications to the component's size, position, or layout at different breakpoints
+
+Please provide the component specifications in a structured format, using the following template:
+
+Component 1:
+1. Component Type:
+2. Size and Dimensions:
+3. Text Content and Labels:
+4. Color Scheme and Visual Styles:
+5. Icons and Visual Elements:
+6. States and Interactions:
+7. Responsive Behavior:
+
+Component 2:
+1. Component Type:
+2. Size and Dimensions:
+3. Text Content and Labels:
+4. Color Scheme and Visual Styles:
+5. Icons and Visual Elements:
+6. States and Interactions:
+7. Responsive Behavior:
+
 ...
 
-Please proceed with the image analysis and provide the row-by-row description, and at the end provide the original user feedback unchanged ({focus}).
+Please analyze each component carefully and provide as much detail as possible based on the visual information available in the wireframe. If certain aspects are not explicitly specified or visually apparent, make reasonable assumptions or provide estimates based on the overall design aesthetics.
+
+(!) At the end of your response please provide the original user feedback unchanged ({focus}).
 """
 
 def sketch_to_description(focus):

@@ -43,13 +43,29 @@ class UiUxDesigner:
 
         return {"css": css, "js": "", "html": html}
 
-    def skech_to_description(self,
-                             thinker,
-                             sketch,
-                             focus):
-
+    def sketch_to_description(self,
+                              thinker,
+                              sketch,
+                              focus):
         say(self.title, "🎨 looking at the sketch very closely now ...", message_color=color.DARKCYAN)
-        return thinker.see(prompt.sketch_to_row_by_row(focus),
-                           # prompt.sketch_to_description(focus),
+        return thinker.see(prompt.sketch_to_description(focus),
+                           sketch,
+                           self.title)
+
+    def sketch_to_layout(self,
+                         thinker,
+                         sketch,
+                         focus):
+        say(self.title, "🎨 looking at the sketch to infer the layout ...", message_color=color.DARKCYAN)
+        return thinker.see(prompt.sketch_to_layout(focus),
+                           sketch,
+                           self.title)
+
+    def sketch_to_specification(self,
+                                thinker,
+                                sketch,
+                                focus):
+        say(self.title, "🎨 looking at the sketch to create component specs ...", message_color=color.DARKCYAN)
+        return thinker.see(prompt.sketch_to_specification(focus),
                            sketch,
                            self.title)

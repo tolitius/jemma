@@ -164,9 +164,9 @@ class ProjectManager:
         say(self.role, "\nDear UI/UX Designer, in this meeting we'll work on creating mockups based on the 💡 idea & sketch",
             who_color = color.CYAN, message_color = color.YELLOW)
 
-        requirements = designer.skech_to_description(thinker,
-                                                     sketch,
-                                                     idea)
+        requirements = designer.sketch_to_description(thinker,
+                                                      sketch,
+                                                      idea)
 
         self.record_requirement("mockup", requirements, store_path)
         self.feature = Feature(requirements)
@@ -202,9 +202,9 @@ class ProjectManager:
         say(self.role, "\nDear UI/UX Designer, in this meeting we'll work on creating mockups based on the 💡 idea & sketch",
             who_color = color.CYAN, message_color = color.YELLOW)
 
-        requirements = designer.skech_to_description(thinker,
-                                                     sketch,
-                                                     idea)
+        requirements = designer.sketch_to_description(thinker,
+                                                      sketch,
+                                                      idea)
 
         self.record_requirement("mockup", requirements, store_path)
         self.feature = Feature(requirements)
@@ -243,9 +243,9 @@ class ProjectManager:
         say(self.role, "\nDear UI/UX Designer, in this meeting we'll look at the sketch to address user's the feedback",
             who_color = color.CYAN, message_color = color.YELLOW)
 
-        requirements = designer.skech_to_description(thinker,
-                                                     sketch,
-                                                     feedback)
+        requirements = designer.sketch_to_description(thinker,
+                                                      sketch,
+                                                      feedback)
 
         self.record_requirement("mockup", requirements, store_path)
 

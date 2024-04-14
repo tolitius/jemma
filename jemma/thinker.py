@@ -80,7 +80,7 @@ class Claude(Thinker):
             prompt,
             image_path,
             who="user",
-            max_tokens=1024,
+            max_tokens=2048,
             action="👀 looking at the image... ",
             mute=False,
             sleep_time=1):

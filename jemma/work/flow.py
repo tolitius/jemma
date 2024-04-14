@@ -24,6 +24,14 @@ def compose_tasks(brain,
         'sketch-to-prototype': {
             'fn': partial(project_manager.meet_to_convert_design_to_prototype, brain, designer, sketch),
             'is_partial': True
+        },
+        'sketch-to-layout': {
+            'fn': partial(designer.sketch_to_layout, brain, sketch, prompt),
+            'is_partial': False # this function does not require any more arguments
+        },
+        'sketch-to-spec': {
+            'fn': partial(designer.sketch_to_specification, brain, sketch, prompt),
+            'is_partial': False # this function does not require any more arguments
         }
     }
 
