@@ -5,57 +5,78 @@ except ImportError:
     import readline
 
 from functools import partial
-from jemma.tools import color, jemma_say
+from jemma.tools import color, jemma_say, deploy
 
 def compose_tasks(brain,
                   project_manager,
                   designer,        ## TODO: project_manager should have a designer OR there should be a Team
+                  engineer,
                   tasks,
                   args):
 
     prompt = args.prompt
     sketch = args.sketch
 
-    task_functions = {
-        'sketch-to-doc': {
-            'fn': partial(project_manager.meet_to_discuss_mockups, brain, designer, prompt, sketch),
-            'is_partial': False # this function does not require any more arguments
-        },
-        'sketch-to-prototype': {
-            'fn': partial(project_manager.meet_to_convert_design_to_prototype, brain, designer, sketch),
-            'is_partial': True
-        },
+    can_do = {
         'sketch-to-layout': {
-            'fn': partial(designer.sketch_to_layout, brain, sketch, prompt),
-            'is_partial': False # this function does not require any more arguments
+            'fn': partial(designer.sketch_to_layout, brain),
+            'needs': ['prompt', 'sketch'],
         },
         'sketch-to-spec': {
-            'fn': partial(designer.sketch_to_specification, brain, sketch, prompt),
-            'is_partial': False # this function does not require any more arguments
-        }
+            'fn': partial(designer.sketch_to_specification, brain),
+            'needs': ['prompt', 'sketch'],
+        },
+        'spec-to-css': {
+            'fn': partial(designer.spec_to_css, brain),
+            'needs': ['prompt', 'sketch', 'layout', 'spec'],
+        },
+        'spec-to-html': {
+            'fn': partial(designer.spec_to_html, brain),
+            'needs': ['prompt', 'sketch', 'layout', 'spec', 'css'],
+        },
+        'deploy': {
+            'fn': partial(deploy),
+            'needs': ['css', 'html'],
+        },
     }
 
     # validate all tasks before execution
-    unknown_tasks = [task for task in tasks if task not in task_functions]
+    unknown_tasks = [task for task in tasks if task not in can_do]
     if unknown_tasks:
         raise Exception(f"don't know how to do this yet: {', '.join(unknown_tasks)}")
 
     ## handrolling Clojure's threading macro
-    done = None
-    for task in tasks:
-        fn = task_functions[task]['fn']
-        is_partial = task_functions[task]['is_partial']
+    memory = {'prompt': prompt, 'sketch': sketch}
 
-        if is_partial:
-            jemma_say(f"task \"{task}\" <<< {done}")
-            done = fn(done)
+    for task in tasks:
+        fn = can_do[task]['fn']
+        needs = can_do[task].get('needs', [])
+
+        ## if this tasks has "needs" validate that all that is "needed" is in memory
+        missing_needs = [need for need in needs if need not in memory]
+        if missing_needs:
+            raise Exception(f"can't do \"{task}\" without \"{', '.join(missing_needs)}\"")
+
+        if needs:
+            jemma_say(f"task \"{task}\" <<< {list(memory.keys())}")
+            fact = fn(memory)
         else:
             jemma_say(f"task \"{task}\" <<< [no input]")
-            done = fn()
+            fact = fn()
 
-        jemma_say(f"task {task} >>> {done}")
+        ## check that fact is a dict, if not raise an exception
+        if not isinstance(fact, dict):
+            raise Exception(f"task \"{task}\" did not return a dict, but {type(fact)} instead: {fact}")
 
-    return done
+        ## if any of fact keys already exist in memory, communicate a warning that they will be overwritten
+        existing_facts = [k for k in fact if k in memory]
+        if existing_facts:
+            jemma_say(f"(!) task \"{task}\" >>> overwriting {', '.join(existing_facts)}")
+
+        jemma_say(f"task \"{task}\" >>> {fact}")
+        memory.update(fact)
+
+    return fact
 
 def create_user_stories(brain,
                         project_manager,
@@ -160,6 +181,7 @@ def compose(brain,
     compose_tasks(brain,
                   project_manager,
                   designer,
+                  engineer,
                   args.tasks,
                   args)
 

@@ -54,18 +54,49 @@ class UiUxDesigner:
 
     def sketch_to_layout(self,
                          thinker,
-                         sketch,
-                         focus):
-        say(self.title, "🎨 looking at the sketch to infer the layout ...", message_color=color.DARKCYAN)
-        return thinker.see(prompt.sketch_to_layout(focus),
-                           sketch,
-                           self.title)
+                         intel):
+
+        feedback, sketch = [intel[key] for key in ("prompt", "sketch")]
+
+        say(self.title, "🪟  looking at the sketch to infer the layout ...", message_color=color.DARKCYAN)
+        return {"layout": thinker.see(prompt.sketch_to_layout(feedback),
+                                      sketch,
+                                      self.title)}
 
     def sketch_to_specification(self,
                                 thinker,
-                                sketch,
-                                focus):
-        say(self.title, "🎨 looking at the sketch to create component specs ...", message_color=color.DARKCYAN)
-        return thinker.see(prompt.sketch_to_specification(focus),
-                           sketch,
-                           self.title)
+                                intel):
+
+        feedback, sketch = [intel[key] for key in ("prompt", "sketch")]
+
+        say(self.title, "📃 looking at the sketch to create component specs ...", message_color=color.DARKCYAN)
+        return {"spec": thinker.see(prompt.sketch_to_specification(feedback),
+                                    sketch,
+                                    self.title)}
+
+    def spec_to_css(self,
+                    thinker,
+                    intel):
+
+        feedback, sketch, layout, spec = [intel[key] for key in ("prompt", "sketch", "layout", "spec")]
+
+        say(self.title, "🎨 using sketch specs to create styles (a.k.a CSS) ...", message_color=color.DARKCYAN)
+
+        # return {"css": thinker.see(prompt.spec_to_css(layout, spec, feedback),
+        #                            sketch,
+        #                            self.title)}
+        return {"css": thinker.think(prompt.spec_to_css(layout, spec, feedback),
+                                     self.title)}
+
+    def spec_to_html(self,
+                     thinker,
+                     intel):
+
+        feedback, sketch, layout, spec, css = [intel[key] for key in ("prompt", "sketch", "layout", "spec", "css")]
+
+        say(self.title, "🕸️  using styles and sketch specs to create a wireframe (a.k.a HTML) ...", message_color=color.DARKCYAN)
+        # return {"html": thinker.see(prompt.spec_to_html(layout, spec, css, feedback),
+        #                             sketch,
+        #                             self.title)}
+        return {"html": thinker.think(prompt.spec_to_html(layout, spec, css, feedback),
+                                      self.title)}

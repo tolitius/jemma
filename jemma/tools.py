@@ -60,19 +60,21 @@ def record_prototype(path, prototype):
    with open(css_file_path, "w") as css_file:
       css_file.write(prototype["css"])
 
-   # write the JavaScript file
-   js_file_path = os.path.join(path, "app.js")
-   with open(js_file_path, "w") as js_file:
-      js_file.write(prototype["js"])
+   if "js" in prototype:
+      # write the JavaScript file
+      js_file_path = os.path.join(path, "app.js")
+      with open(js_file_path, "w") as js_file:
+         js_file.write(prototype["js"])
 
    # write the HTML file
    html_file_path = os.path.join(path, "index.html")
    with open(html_file_path, "w") as html_file:
       html_file.write(prototype["html"])
 
-   print("prototype files created successfully:")
+   print("\nprototype files created successfully:")
    print(f"- {path}/index.html")
-   print(f"- {path}/app.js")
+   if "js" in prototype:
+      print(f"- {path}/app.js")
    print(f"- {path}/app.css")
 
 
@@ -91,6 +93,11 @@ def open_local_browser(dir_path):
          print(f"can't find a file system path to open in the browser: {file_path}")
    finally:
       os.chdir(current_dir)
+
+def deploy(prototype, path="prototype"):
+   record_prototype(path, prototype)
+   open_local_browser(path)
+   return {"deployed": True, "deploy_path": path}
 
 def parse_cli_arguments():
     parser = argparse.ArgumentParser(
