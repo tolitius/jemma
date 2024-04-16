@@ -40,6 +40,28 @@ class Ollama(Thinker):
 
         return response
 
+    def see(self, prompt, image_path, who="user", action="", mute=False, sleep_time=0):
+
+        if action != "" or not mute:
+            say(who, action + image_path)
+
+        image_data, image_type = image_path_to_data(image_path).values()
+
+        thinking = ollama.generate(model=self.model_name,
+                                   prompt=prompt,
+                                   images=[image_data],
+                                   options={'num_predict': -1,
+                                            'num_ctx': 4096},
+                                   stream=True)
+
+        response = ""
+        for word in thinking:
+            response += word['response']
+            if not mute:
+                print(word['response'], end="")
+
+        return response
+
 class Replicate(Thinker):
 
     def __init__(self, model_name):
