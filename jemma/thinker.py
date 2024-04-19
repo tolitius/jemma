@@ -6,6 +6,8 @@ import replicate
 from anthropic import Anthropic
 from openai import OpenAI
 
+## TODO: take and pass options with a model type (i.e. max_tokens [llama] vs. max_new_tokens [mistral], etc.)
+
 class Thinker:
 
     # defining init method for class
@@ -77,7 +79,8 @@ class Replicate(Thinker):
             self.model_name,
             input={
                 "prompt": prompt,
-                # "max_new_tokens": 32000,
+                # "max_tokens": 8192,       # llama3
+                # "max_new_tokens": 32000,  # mistral
                 # "max_length": 32000
             },
         ):
