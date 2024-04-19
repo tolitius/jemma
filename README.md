@@ -93,11 +93,11 @@ I best work with Claude models, that is why my examples all end in "`--claude`":
 ```bash
 $ jemma --prompt "Trivia Game" --build-prototype --claude
 ```
-by default though I will call Ollama (gemma model):
+by default though I will call Ollama (llama3 model):
 
 ```bash
 $ jemma --prompt "Trivia Game" --build-prototype
-Ollama 🧠 gemma:7b-instruct-v1.1-fp16 ✅
+Ollama 🧠 llama3:8b-instruct-fp16 ✅
 ```
 
 here are the default models I would use:
