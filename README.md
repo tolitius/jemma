@@ -106,8 +106,8 @@ here are the default models I would use:
 |    ----        |    ----      |
 | `--claude`       | `claude-3-haiku-20240307` |
 | `--openai`       | `gpt-3.5-turbo`|
-| `--ollama`       | `gemma:7b-instruct-v1.1-fp16`|
-| `--replicate`    | `mistralai/mixtral-8x7b-instruct-v0.1`|
+| `--ollama`       | `llama3:8b-instruct-fp16`|
+| `--replicate`    | `meta/meta-llama-3-70b-instruct`|
 
 but you can override all of these with your (local, or not) models:
 

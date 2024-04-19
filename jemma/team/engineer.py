@@ -25,7 +25,7 @@ class Engineer:
         html = thinker.think(code.create_html_file(requirements, css, js),
                              "Engineer",
                              mute=True,
-                             action="creating html 🕸️ (a.k.a. \"the skeleton of the web\")")
+                             action="creating html 🕸️  (a.k.a. \"the skeleton of the web\")")
 
         return {"css": css, "js": js, "html": html}
 

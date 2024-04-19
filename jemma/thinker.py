@@ -27,7 +27,7 @@ class Ollama(Thinker):
         thinking = ollama.generate(model=self.model_name,
                                    prompt=prompt,
                                    options={'num_predict': -1,
-                                            'num_ctx': 4096},
+                                            'num_ctx': 8192},  # default to llama's 3 context window
                                    stream=True)
         if action != "" or not mute:
             say(who, action)
@@ -202,8 +202,8 @@ class ChatGPT(Thinker):
 ## makes a brain from cli arguments
 def make_brain(args, default_models = {'claude': 'claude-3-haiku-20240307',
                                        'openai': 'gpt-3.5-turbo',
-                                       'ollama': 'gemma:7b-instruct-v1.1-fp16',
-                                       'replicate': 'mistralai/mixtral-8x7b-instruct-v0.1'}):
+                                       'ollama': 'llama3:8b-instruct-fp16',
+                                       'replicate': 'meta/meta-llama-3-70b-instruct'}):
 
     model_classes = {
         'claude': Claude,
@@ -238,6 +238,7 @@ def make_brain(args, default_models = {'claude': 'claude-3-haiku-20240307',
 # mixtral:8x7b-instruct-v0.1-q4_K_M
 # deepseek-coder:6.7b-instruct-fp16
 # gemma:7b-instruct-fp16
+# llama3:8b-instruct-fp16
 
 # ---- claude models
 
@@ -250,3 +251,7 @@ def make_brain(args, default_models = {'claude': 'claude-3-haiku-20240307',
 # gpt-3.5-turbo-0125   (16K context window)
 # gpt-4-32k
 # gpt-4-turbo-preview  (128K context window)
+
+# ---- replicate models
+
+# meta/meta-llama-3-70b-instruct

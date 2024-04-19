@@ -38,6 +38,14 @@ def compose_tasks(brain,
             'fn': partial(deploy),
             'needs': ['css', 'html'],
         },
+        'take-feedback': {
+            'fn': partial(ask_for_feedback),
+            'provide-to': ['spec-to-css', 'spec-to-html'],
+        },
+        ## 'evaluate': {
+        ##     'fn': partial(tester.validate-foo, brain),
+        ##     'needs': ['css', 'html'],
+        ## }
     }
 
     # validate all tasks before execution
