@@ -37,7 +37,7 @@ $ jemma --prompt "Learning Portal" --sketch ~/tmp/sketch.png --build-prototype -
 ```
 <img width="814" alt="image" src="https://github.com/tolitius/jemma/assets/136575/e7da9bb4-71ab-4e1e-ab11-c89217b921c3">
 
-_this does require one or to hints of feedback, but I'm getting better_
+_this does require one or two hints of feedback, but I'm getting better_
 
 # 🕹️ can I play?
 
