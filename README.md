@@ -3,6 +3,7 @@
 <img src="docs/jemma.gif" width="850">
 
 - [🧬 what I do](#-what-i-do)
+  - [am skechin'](#-am-sketchin)
 - [🕹️ can I play?](#%EF%B8%8F-can-i-play)
   - [install me](#install-me)
   - [convert ideas to code](#convert-ideas-to-code)
@@ -26,6 +27,17 @@ and I create a web based prototype 🚀
 
 
 after the prototype is built, I take feedback and refactor it.
+
+## 🎨 am sketchin'
+
+I also dabble in converting sketches to web app mockups:
+
+```bash
+$ jemma --prompt "Learning Portal" --sketch ~/tmp/sketch.png --build-prototype --claude
+```
+<img width="814" alt="image" src="https://github.com/tolitius/jemma/assets/136575/e7da9bb4-71ab-4e1e-ab11-c89217b921c3">
+
+_this does require one or to hints of feedback, but I'm getting better_
 
 # 🕹️ can I play?
 
