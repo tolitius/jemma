@@ -1,4 +1,4 @@
-import webbrowser
+import webbrowser, requests
 import os, argparse, sys, re, base64
 
 from datetime import datetime
@@ -15,6 +15,7 @@ class color:
    GRAY_ME = '\033[38;5;239m'
    GRAY_DIUM = '\033[38;5;240m'
    GRAY_MEDIUM = '\033[38;5;244m'
+   GRAY_MEDIUM_LIGHT = '\033[38;5;248m'
    GRAY_LIGHT = '\033[38;5;250m'
    GRAY_VERY_LIGHT = '\033[38;5;254m'
    BOLD = '\033[1m'
@@ -105,7 +106,7 @@ def parse_cli_arguments():
                '      then it helps you to iterate on it',
         formatter_class=argparse.RawTextHelpFormatter,
         usage='%(prog)s [-h] [--requirements path-to-file] [--prompt prompt] [--build-prototype]\n'
-              '                 [--claude [model name]] [--openai [model name]] [--ollama [model name]] [--replicate [model name]]',
+              '                 [--claude [model name]] [--openai [model name]] [--ollama [model name]] [--replicate [model name]] [--custom [url]]',
         epilog='thoughts in, software out'
     )
 
@@ -126,6 +127,7 @@ def parse_cli_arguments():
     parser.add_argument('--openai', metavar='model name', nargs='?', const=True, default=None, help='choose an open ai model (optional, can be provided without a value)')
     parser.add_argument('--ollama', metavar='model name', nargs='?', const=True, default=None, help='choose an ollama model (optional, can be provided without a value)')
     parser.add_argument('--replicate', metavar='model name', nargs='?', const=True, default=None, help='choose a model from Replicate (optional, can be provided without a value)')
+    parser.add_argument('--custom', metavar='url', nargs='?', const=True, default=None, help='choose a model running at a custom url (optional, can be provided without a value)')
 
     if len(sys.argv) == 1 or '-h' in sys.argv or '--help' in sys.argv:
         parser.print_help(sys.stderr)
@@ -173,3 +175,22 @@ def image_path_to_data(path):
 
    return {"image_data": file_to_utf8(path),
            "image_type": image_path_to_type(path)}
+
+def send_post_request(prompt,
+                      url="http://localhost:4242/api"):
+
+    payload = {"prompt": prompt}
+
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()  # raise an exception for 4xx or 5xx status codes
+
+        # process the response
+        if response.status_code == 200:
+            # print(f"response {response.text}")
+            return response.text
+        else:
+            print(f"request failed with status code: {response.status_code}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"an error occurred: {e}")
