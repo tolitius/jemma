@@ -106,7 +106,7 @@ def parse_cli_arguments():
                '      then it helps you to iterate on it',
         formatter_class=argparse.RawTextHelpFormatter,
         usage='%(prog)s [-h] [--requirements path-to-file] [--prompt prompt] [--build-prototype]\n'
-              '                 [--claude [model name]] [--openai [model name]] [--ollama [model name]] [--replicate [model name]] [--custom [url]]',
+              '                 [--claude [model name]] [--openai [model name]] [--ollama [model name]] [--replicate [model name]] [--copilot [model]] [--custom [url]]',
         epilog='thoughts in, software out'
     )
 
@@ -127,6 +127,7 @@ def parse_cli_arguments():
     parser.add_argument('--openai', metavar='model name', nargs='?', const=True, default=None, help='choose an open ai model (optional, can be provided without a value)')
     parser.add_argument('--ollama', metavar='model name', nargs='?', const=True, default=None, help='choose an ollama model (optional, can be provided without a value)')
     parser.add_argument('--replicate', metavar='model name', nargs='?', const=True, default=None, help='choose a model from Replicate (optional, can be provided without a value)')
+    parser.add_argument('--copilot', metavar='model name ', nargs='?', const=True, default=None, help='use copilot via "colalamo" with an optional model name')
     parser.add_argument('--custom', metavar='url', nargs='?', const=True, default=None, help='choose a model running at a custom url (optional, can be provided without a value)')
 
     if len(sys.argv) == 1 or '-h' in sys.argv or '--help' in sys.argv:
@@ -177,12 +178,10 @@ def image_path_to_data(path):
            "image_type": image_path_to_type(path)}
 
 def send_post_request(prompt,
-                      url="http://localhost:4242/api"):
-
-    payload = {"prompt": prompt}
+                      url="http://localhost:4242/ask"):
 
     try:
-        response = requests.post(url, json=payload)
+        response = requests.post(url, json = prompt)
         response.raise_for_status()  # raise an exception for 4xx or 5xx status codes
 
         # process the response

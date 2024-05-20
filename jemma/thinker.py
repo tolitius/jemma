@@ -1,10 +1,11 @@
-import os, time
+import os, time, json
 from jemma.tools import color, say, image_path_to_data, send_post_request
 
 import ollama
 import replicate
 from anthropic import Anthropic
 from openai import OpenAI
+import colalamo
 
 ## TODO: take and pass options with a model type (i.e. max_tokens [llama] vs. max_new_tokens [mistral], etc.)
 
@@ -202,12 +203,13 @@ class ChatGPT(Thinker):
 
         return response
 
-class CustomModel(Thinker):
+class Copilot(Thinker):
 
-    def __init__(self, url):
-        super().__init__(url)
+    def __init__(self, model_name):
+        super().__init__(model_name)
+        self.client = colalamo.Copilot()
 
-    ## make sure local copilot gateway is running
+    ## make sure local gateway is running
     def think(self, prompt, who="user", action="", mute=True, sleep_time=2): # sleep not to exceed the rate limit
 
         if action != "" or not mute:
@@ -215,25 +217,65 @@ class CustomModel(Thinker):
 
         time.sleep(sleep_time)
 
-        response = send_post_request(prompt, self.model_name)
-        say(who, f"\n\n{response}", message_color=color.GRAY_MEDIUM_LIGHT)
+        response = self.client.ask(messages = [{"role": "user",
+                                                "content": prompt}],
+                                   model = self.model_name,
+                                   temperature = 0.1)
+
+        if response['status'] != 200:
+            return response
+
+        reply = response['text']['reply']
+
+        say(who, f"\n\n{reply}", message_color=color.GRAY_MEDIUM_LIGHT)
 
         # print(color.RED + ">>" + response + "<<" + color.END)
 
-        return response
+        return reply
+
+class CustomModel(Thinker):
+
+    def __init__(self, url):
+        super().__init__(url)
+
+    ## make sure local gateway is running
+    def think(self, prompt, who="user", action="", mute=True, sleep_time=2): # sleep not to exceed the rate limit
+
+        if action != "" or not mute:
+            say(who, action)
+
+        time.sleep(sleep_time)
+
+        ask = {"messages": [{"role": "user",
+                             "content": prompt}],
+               # "temperature": 0.0,
+               # "max_tokens": 4096,
+               }
+
+        response = send_post_request(ask, self.model_name)
+        parsed = json.loads(response)
+        reply = parsed['reply']
+
+        say(who, f"\n\n{reply}", message_color=color.GRAY_MEDIUM_LIGHT)
+
+        # print(color.RED + ">>" + response + "<<" + color.END)
+
+        return reply
 
 ## makes a brain from cli arguments
 def make_brain(args, default_models = {'claude': 'claude-3-haiku-20240307',
                                        'openai': 'gpt-3.5-turbo',
                                        'ollama': 'llama3:8b-instruct-fp16',
                                        'replicate': 'meta/meta-llama-3-70b-instruct',
-                                       'custom': 'http://localhost:4242/api'}):
+                                       'copilot': 'gpt-3.5-turbo',
+                                       'custom': 'http://localhost:4242/ask'}):
 
     model_classes = {
         'claude': Claude,
         'openai': ChatGPT,
         'ollama': Ollama,
         'replicate': Replicate,
+        'copilot': Copilot,
         'custom': CustomModel
     }
 

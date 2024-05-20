@@ -120,6 +120,7 @@ here are the default models I would use:
 | `--openai`       | `gpt-3.5-turbo`|
 | `--ollama`       | `llama3:8b-instruct-fp16`|
 | `--replicate`    | `meta/meta-llama-3-70b-instruct`|
+| `--copilot`    | `gpt-3.5-turbo`|
 
 but you can override all of these with your (local, or not) models:
 
@@ -128,6 +129,7 @@ $ jemma --prompt "Trivia Game" --build-prototype --claude claude-3-opus-20240229
 $ jemma --prompt "Trivia Game" --build-prototype --ollama dolphin-mistral:7b-v2.6-dpo-laser-fp16
 $ jemma --prompt "Trivia Game" --build-prototype --openai gpt-4-turbo-preview
 $ jemma --prompt "Trivia Game" --build-prototype --replicate meta/llama-2-70b-chat
+$ jemma --prompt "Trivia Game" --build-prototype --copilot gpt-4
 $ ...
 ```
 
