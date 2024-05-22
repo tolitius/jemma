@@ -208,6 +208,8 @@ class Copilot(Thinker):
     def __init__(self, model_name):
         super().__init__(model_name)
         self.client = colalamo.Copilot()
+        self.config = {'gpt-3.5-turbo': {'max_tokens': 16384},
+                       'gpt-4': {'max_tokens': 4096}}
 
     ## make sure local gateway is running
     def think(self, prompt, who="user", action="", mute=True, sleep_time=2): # sleep not to exceed the rate limit
@@ -220,9 +222,11 @@ class Copilot(Thinker):
         response = self.client.ask(messages = [{"role": "user",
                                                 "content": prompt}],
                                    model = self.model_name,
+                                   max_tokens = self.config.get(self.model_name, {}).get('max_tokens', 4096),
                                    temperature = 0.1)
 
         if response['status'] != 200:
+            say(who, f"🚨 could not help you: {response}", message_color=color.RED)
             return response
 
         reply = response['text']['reply']
