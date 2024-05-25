@@ -29,7 +29,7 @@ class BusinessOwner:
     def split_and_refine(self,
                          thinker,
                          requirements,
-                         max_refinement_attempts=1):
+                         max_refinement_attempts=2):
 
         # slit requirements into features
         features = self.split_requirements_to_features(thinker, requirements)

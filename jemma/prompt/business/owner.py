@@ -131,9 +131,9 @@ Remember feature is not a small task but a business functionality
 **chain of thought**
 <before providing a response think step by step>
 
-**feedback about each features**
+**feedback about each feature**
 <feedback for individual features>
-<DON'T include features that are satisfactory>
+<when providing feedback DON'T include features that are satisfactory>
 
 # GUIDELINES
 1. Review features and assess whether it aligns with the original requirements
@@ -149,10 +149,10 @@ Remember feature is not a small task but a business functionality
      - "validate email field", etc.
 5. Don't include features that are satisfactory in the reponse
 6. Stricly follow the "RESPONSE FORMAT" provided above
-7. Only in case there no suggestions or improvements to the split, reply with "APPROVED AND READY FOR REFINEMENT" in uppercase
-8. If the features are not split well and require to be split differently, provide feedback indicating so.
+7. If the features are not split well and require to be split differently, provide feedback indicating so.
 
 Make sure that the list of feature names FULLY addresses every aspect of the requirements.
+(!) Only in case there no suggestions or improvements to ANY of the features in the list, reply with "APPROVED AND READY FOR REFINEMENT" in uppercase
 Remember, these are not full descriptions of the features, but a high-level feature names.
 """
 
